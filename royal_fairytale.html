@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b0620">
+<title>Our Royal Fairytale ♛</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--rf-gold:#e9cf9b;--rf-pink:#f4a6cb;--rf-ivory:#fff6ea;--rf-plum:#0b0620;--rf-serif:'Cormorant Garamond',Georgia,serif;--rf-disp:'Playfair Display',Georgia,serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;height:100%;overflow:hidden;background:var(--rf-plum);color:var(--rf-ivory);font-family:var(--rf-serif)}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;touch-action:manipulation}
+#rfCv{position:fixed;inset:0;width:100%;height:100%;display:block}
+.rf-fb{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 30%,#3a1a5e,#0b0620 70%)}
+.rf-ui{position:fixed;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom))}
+.rf-ui>*{pointer-events:auto}
+.rf-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.rf-chip{width:42px;height:42px;border-radius:50%;background:rgba(30,12,60,.55);border:1px solid rgba(233,207,155,.5);backdrop-filter:blur(8px);font-size:17px}
+.rf-cap{text-align:center;max-width:640px;margin:0 auto;padding:0 6px;pointer-events:none}
+.rf-t{font:600 clamp(24px,6vw,44px)/1.1 var(--rf-disp);letter-spacing:.06em;color:var(--rf-gold);text-shadow:0 0 24px rgba(244,166,203,.55);margin:0 0 6px}
+.rf-l{font:italic 600 clamp(18px,4.4vw,24px)/1.45 var(--rf-serif);margin:0;text-shadow:0 2px 14px #000}
+.rf-names{display:flex;justify-content:space-between;gap:12px;max-width:560px;margin:12px auto 0;font:600 clamp(14px,3.6vw,18px) var(--rf-disp);letter-spacing:.18em;text-transform:uppercase;color:var(--rf-gold);opacity:0;transition:opacity 1.4s}.rf-names.on{opacity:1}.rf-names small{display:block;font:italic 500 15px var(--rf-serif);letter-spacing:.08em;text-transform:none;color:#f6dff0}
+.rf-bot{display:flex;align-items:center;justify-content:center;gap:12px}
+.rf-btn{padding:12px 24px;border-radius:999px;font:600 18px var(--rf-serif);letter-spacing:.04em;background:linear-gradient(135deg,#fbe9b7,#d9aa52);color:#3a1d4f;box-shadow:0 0 28px rgba(233,207,155,.45);border:1px solid #fff3d0;transition:transform .2s}.rf-btn:active{transform:scale(.96)}
+.rf-btn.g{background:rgba(30,12,60,.55);color:var(--rf-ivory);box-shadow:none;border:1px solid rgba(233,207,155,.5);backdrop-filter:blur(8px)}.rf-btn[disabled]{opacity:.3;pointer-events:none}
+.rf-dots{display:flex;gap:8px}.rf-dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25)}.rf-dots i.on{background:var(--rf-gold);box-shadow:0 0 10px var(--rf-gold)}
+.rf-yes{display:none;margin:14px auto 0;pointer-events:auto}.rf-yes.on{display:block;animation:rfp 1.8s ease-in-out infinite}@keyframes rfp{50%{box-shadow:0 0 44px rgba(244,166,203,.9)}}
+#rfLoad,#rfStart{position:fixed;inset:0;z-index:9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;background:radial-gradient(ellipse at 50% 35%,#4a2370,#0b0620 72%);transition:opacity 1.2s}
+#rfLoad.off,#rfStart.off{opacity:0;pointer-events:none}
+.rf-ring{width:64px;height:64px;border-radius:50%;border:2px solid rgba(233,207,155,.25);border-top-color:var(--rf-gold);animation:rfs 1.1s linear infinite}@keyframes rfs{to{transform:rotate(360deg)}}
+.rf-h1{font:600 clamp(34px,9vw,64px)/1.05 var(--rf-disp);margin:0;color:var(--rf-gold);text-shadow:0 0 34px rgba(244,166,203,.6)}
+.rf-pan{position:fixed;inset:0;z-index:8;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(8,3,24,.8);backdrop-filter:blur(6px)}.rf-pan.on{display:flex}
+.rf-card{width:min(94vw,480px);max-height:88vh;overflow:auto;border-radius:24px;padding:22px;background:rgba(32,14,64,.92);border:1px solid rgba(233,207,155,.5)}
+.rf-card label{display:block;margin:12px 0 4px;font:600 15px var(--rf-disp);letter-spacing:.08em;color:var(--rf-gold)}.rf-card input[type=text],.rf-card textarea{width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(233,207,155,.4);background:rgba(255,255,255,.07);color:var(--rf-ivory);font:500 17px var(--rf-serif)}.rf-card textarea{min-height:110px}.rf-card input[type=color]{width:56px;height:34px;border:0;background:none}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;transition-duration:.01s!important}}
+</style></head><body>
+<canvas id="rfCv" aria-label="3D royal fairytale"></canvas><div class="rf-fb" id="rfFb" hidden></div>
+<div class="rf-ui" id="rfUi">
+ <div class="rf-top"><button class="rf-chip" id="rfLeave" aria-label="Back to the castle">‹</button><div style="display:flex;gap:8px"><button class="rf-chip" id="rfCfgB" aria-label="Customize">✎</button><button class="rf-chip" id="rfSnd" aria-label="Sound on or off">♪</button></div></div>
+ <div><div class="rf-cap"><h2 class="rf-t" id="rfT"></h2><p class="rf-l" id="rfL"></p><button class="rf-btn rf-yes" id="rfYes">Say yes 💍</button></div>
+ <div class="rf-names" id="rfN"><span id="rfNK"></span><span id="rfNQ" style="text-align:right"></span></div>
+ <div class="rf-bot" style="margin-top:14px"><button class="rf-btn g" id="rfBack">‹ Back</button><div class="rf-dots" id="rfDots"></div><button class="rf-btn" id="rfNext">Continue</button></div></div>
+</div>
+<div id="rfLoad"><div class="rf-ring"></div><div class="rf-l">Preparing the kingdom…</div></div>
+<div id="rfStart" class="off"><p class="rf-l" style="color:var(--rf-pink)">A royal fairytale in four scenes</p><h1 class="rf-h1">Our Royal<br>Fairytale</h1><button class="rf-btn" id="rfEnter">Enter the Kingdom ♛</button><p class="rf-l" style="font-size:16px;opacity:.7">Sound on for the full experience</p></div>
+<div class="rf-pan" id="rfPan"><div class="rf-card"><h2 class="rf-t" style="font-size:26px">Customize the story</h2>
+ <label for="cK">The King’s name</label><input type="text" id="cK"><label for="cQ">The Queen’s name</label><input type="text" id="cQ">
+ <label for="cM">Proposal message</label><textarea id="cM"></textarea>
+ <label>King’s royal coat <input type="color" id="cKc"></label><label>Queen’s gown <input type="color" id="cQc"></label>
+ <div style="display:flex;gap:10px;margin-top:16px"><button class="rf-btn" id="cSave">Save</button><button class="rf-btn g" id="cReset">Reset</button><button class="rf-btn g" id="cClose">Close</button></div></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(()=>{
+const $=id=>document.getElementById(id),RM=matchMedia('(prefers-reduced-motion:reduce)').matches,MOB=/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent)||innerWidth<700;
+const D0={k:'The King',q:'The Queen',m:'From the first day I met you, my heart knew its home. Will you walk beside me, in every lifetime, as my Queen? ♾️',kc:'#2b3a8f',qc:'#f4a6cb'};
+let cfg={...D0};try{Object.assign(cfg,JSON.parse(localStorage.getItem('royalFairytaleCfg')||'{}'))}catch(e){}
+const E=v=>v<0?0:v>1?1:v*v*(3-2*v),lp=(a,b,t)=>a+(b-a)*t;
+const SC=[{t:'The Enchanted Gates',l:'Beyond these golden gates, a story is waiting for us…'},{t:'The King & The Queen',l:'Two hearts, one kingdom, and a love that was always meant to be.'},{t:'The Proposal',l:''},{t:'The Royal Balcony',l:'Under a sky of fireworks, the whole kingdom celebrates.'}];
+let cur=-1,t0=0,acc=0,ta=0,typed=0,R=null,sc,cam,K,Q,gateL,gateR,ring,ringL,fw,amb,castleLight,warm,AC,mg,sndOn=true,fwT=0,frames=0,acum=0,tier=1;
+/* ---------- audio (Web Audio) ---------- */
+function audioStart(){if(AC)return;try{AC=new(window.AudioContext||window.webkitAudioContext)();mg=AC.createGain();mg.gain.value=.5;mg.connect(AC.destination);const f=AC.createBiquadFilter();f.type='lowpass';f.frequency.value=900;f.connect(mg);
+ [174.6,220,261.6,329.6,392].forEach((fr,i)=>{const o=AC.createOscillator(),g=AC.createGain(),l=AC.createOscillator(),lg=AC.createGain();o.type=i%2?'triangle':'sine';o.frequency.value=fr;o.detune.value=(i-2)*4;g.gain.value=.05;l.frequency.value=.07+i*.03;lg.gain.value=.025;l.connect(lg);lg.connect(g.gain);o.connect(g);g.connect(f);o.start();l.start()})}catch(e){AC=null}}
+function tone(fr,d,ty='sine',v=.12,pan=0,to){if(!AC||!sndOn)return;const o=AC.createOscillator(),g=AC.createGain();o.type=ty;o.frequency.value=fr;if(to)o.frequency.exponentialRampToValueAtTime(to,AC.currentTime+d);g.gain.value=v;g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+d);o.connect(g);let n=g;if(AC.createStereoPanner){const p=AC.createStereoPanner();p.pan.value=pan;g.connect(p);n=p}n.connect(mg);o.start();o.stop(AC.currentTime+d)}
+const chime=(f=880)=>{tone(f,1.4,'sine',.14);tone(f*1.5,1.6,'sine',.07)},creak=()=>tone(90,2.6,'sawtooth',.05,0,55);
+function boom(pan){if(!AC||!sndOn)return;const n=AC.sampleRate*.6,b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,3);const s=AC.createBufferSource(),f=AC.createBiquadFilter(),g=AC.createGain();s.buffer=b;f.type='lowpass';f.frequency.value=420;g.gain.value=.35;s.connect(f);f.connect(g);if(AC.createStereoPanner){const p=AC.createStereoPanner();p.pan.value=pan;g.connect(p);p.connect(mg)}else g.connect(mg);s.start();tone(1200+Math.random()*900,.5,'sine',.04,pan)}
+/* ---------- 3D ---------- */
+function build3D(){
+ const T=THREE;R=new T.WebGLRenderer({canvas:$('rfCv'),antialias:!MOB,powerPreference:'high-performance'});R.setPixelRatio(Math.min(devicePixelRatio,MOB?1.5:2));R.outputEncoding=T.sRGBEncoding;R.toneMapping=T.ACESFilmicToneMapping;R.toneMappingExposure=1.1;R.shadowMap.enabled=!MOB;
+ sc=new T.Scene();sc.background=new T.Color('#0b0620');sc.fog=new T.FogExp2('#170a36',.013);cam=new T.PerspectiveCamera(55,1,.1,700);
+ const M=(c,r=.6,m=0,e)=>new T.MeshStandardMaterial({color:c,roughness:r,metalness:m,emissive:e||0x000000}),G=(g,m,x=0,y=0,z=0,p=sc)=>{const o=new T.Mesh(g,m);o.position.set(x,y,z);o.castShadow=true;o.receiveShadow=true;p.add(o);return o};
+ const gt=(()=>{const c=document.createElement('canvas');c.width=c.height=64;const x=c.getContext('2d'),g=x.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.3,'rgba(255,255,255,.45)');g.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=g;x.fillRect(0,0,64,64);return new T.CanvasTexture(c)})();
+ const pts=(n,size,fn)=>{const p=new Float32Array(n*3),c=new Float32Array(n*3);for(let i=0;i<n;i++)fn(i,p,c);const g=new T.BufferGeometry();g.setAttribute('position',new T.BufferAttribute(p,3));g.setAttribute('color',new T.BufferAttribute(c,3));const o=new T.Points(g,new T.PointsMaterial({size,map:gt,vertexColors:true,transparent:true,depthWrite:false,blending:T.AdditiveBlending,sizeAttenuation:true}));o.frustumCulled=false;sc.add(o);return o};
+ const hemi=new T.HemisphereLight('#b9a6ff','#2a1440',.7);sc.add(hemi);
+ const moon=new T.DirectionalLight('#ffd9ec',1.1);moon.position.set(30,50,40);moon.castShadow=!MOB;moon.shadow.mapSize.set(1024,1024);Object.assign(moon.shadow.camera,{left:-12,right:12,top:12,bottom:-12,near:1,far:120});sc.add(moon);sc.add(moon.target);
+ warm=new T.PointLight('#ffcf8a',1.2,24);sc.add(warm);castleLight=new T.PointLight('#ffb0d0',0,40);sc.add(castleLight);
+ sc.userData.moon=moon;
+ /* sky */
+ pts(1400,1.6,(i,p,c)=>{const a=Math.random()*6.28,b=Math.acos(Math.random()*.9+.1),r=400;p[i*3]=Math.cos(a)*Math.sin(b)*r;p[i*3+1]=Math.cos(b)*r;p[i*3+2]=Math.sin(a)*Math.sin(b)*r;const w=.6+Math.random()*.4;c[i*3]=w;c[i*3+1]=w*.9;c[i*3+2]=1});
+ const mo=new T.Sprite(new T.SpriteMaterial({map:gt,color:'#fff0dd',blending:T.AdditiveBlending,fog:false}));mo.scale.set(70,70,1);mo.position.set(120,150,-300);sc.add(mo);
+ /* ground, path, hedges, roses, lamps */
+ const gr=G(new T.PlaneGeometry(500,500),M('#1d1240',.95));gr.rotation.x=-Math.PI/2;gr.castShadow=false;
+ const pa=G(new T.PlaneGeometry(3.4,120),M('#d9bf8c',.5,.2,'#3a2a10'),0,.02,-50);pa.rotation.x=-Math.PI/2;pa.castShadow=false;
+ const hm=M('#173a3a',.9),rm=M('#f06aa6',.5,0,'#5a1030');for(let i=0;i<22;i++)for(const s of[-1,1]){G(new T.BoxGeometry(1.2,1,2.6),hm,s*3.2,.5,-i*5);if(i%2)G(new T.SphereGeometry(.28,10,8),rm,s*2.55,.95,-i*5+(i%3-1))}
+ const lamp=M('#fff1c8',.3,0,'#ffcf7a');for(let i=0;i<8;i++)for(const s of[-1,1]){G(new T.CylinderGeometry(.05,.07,2.2,8),M('#e9cf9b',.3,.8),s*2.2,1.1,-i*9-6);const l=G(new T.SphereGeometry(.17,12,10),lamp,s*2.2,2.3,-i*9-6);l.castShadow=false}
+ /* gates */
+ const gm=M('#e9cf9b',.3,.85),gate=new T.Group();gate.position.set(0,0,0);sc.add(gate);
+ for(const s of[-1,1]){G(new T.BoxGeometry(.9,6.5,.9),gm,s*3.4,3.25,0,gate);G(new T.SphereGeometry(.45,14,12),gm,s*3.4,6.8,0,gate)}
+ const mk=s=>{const h=new T.Group();h.position.set(s*3.4,0,0);gate.add(h);for(let i=0;i<9;i++){G(new T.CylinderGeometry(.05,.05,5.4,8),gm,-s*(.35+i*.3),2.9,0,h)}G(new T.BoxGeometry(2.9,.14,.14),gm,-s*1.6,1,0,h);G(new T.BoxGeometry(2.9,.14,.14),gm,-s*1.6,5.4,0,h);const hr=G(new T.SphereGeometry(.34,14,12),M('#f4a6cb',.3,.2,'#ff5fa0'),-s*1.55,3.3,0,h);hr.scale.set(1,.9,.5);return h};
+ gateL=mk(1);gateR=mk(-1);const ar=G(new T.TorusGeometry(3.4,.14,10,40,Math.PI),gm,0,6.4,0,gate);
+ /* castle */
+ const castle=(x,z,s)=>{const g=new T.Group();g.position.set(x,0,z);g.scale.setScalar(s);sc.add(g);const st=M('#e8d9ee',.8,0,'#2a1a40'),ro=M('#c46aa0',.5,.1),wm=M('#ffd48a',.4,0,'#ffb347');G(new T.BoxGeometry(14,16,8),st,0,8,0,g);G(new T.ConeGeometry(5,8,4),ro,0,20,0,g).rotation.y=.78;
+  for(const sx of[-10,10,-5.5,5.5]){const h=sx%10?20:26;G(new T.CylinderGeometry(1.8,2,h,14),st,sx,h/2,sx%10?1:-1,g);G(new T.ConeGeometry(2.5,6,14),ro,sx,h+3,sx%10?1:-1,g)}
+  for(let i=0;i<14;i++){const w=G(new T.PlaneGeometry(.9,1.6),wm,-5.5+(i%7)*1.8,5+Math.floor(i/7)*5,4.02,g);w.castShadow=false}return g};
+ castle(0,-95,1.7);castle(200,-70,2);
+ /* balcony */
+ const bal=new T.Group();bal.position.set(200,0,0);sc.add(bal);G(new T.BoxGeometry(9,.4,6),M('#f7efe6',.25,.1),0,-.2,0,bal);for(let i=0;i<13;i++)G(new T.CylinderGeometry(.06,.06,1,8),M('#f7efe6',.3),-4+i*.67,.5,-2.7,bal);G(new T.BoxGeometry(9,.12,.2),gm,0,1.05,-2.7,bal);
+ const pl=new T.PointLight('#ffd9a8',1,18);pl.position.set(200,3,1);sc.add(pl);
+ /* people */
+ function person(o){const g=new T.Group(),sk=M('#f1c4a6',.7),hr=M(o.hair,.8),cl=M(o.cloth,.5,.1),go=M('#e9cf9b',.3,.85),hips=new T.Group();hips.position.y=1;g.add(hips);
+  const tor=G(new T.CylinderGeometry(.22,.17,.62,14),cl,0,.33,0,hips),head=G(new T.SphereGeometry(.17,18,14),sk,0,.84,0,hips);G(new T.SphereGeometry(.185,16,12,0,6.3,0,2),hr,0,.86,-.02,hips);if(o.long)G(new T.CylinderGeometry(.18,.12,.5,12),hr,0,.62,-.1,hips);
+  const cr=new T.Group();cr.position.set(0,1.02,0);hips.add(cr);G(new T.CylinderGeometry(.16,.15,.07,16),go,0,0,0,cr);for(let i=0;i<6;i++){const a=i/6*6.28;G(new T.ConeGeometry(.03,.1,6),go,Math.cos(a)*.15,.07,Math.sin(a)*.15,cr)}
+  const arm=s=>{const sh=new T.Group();sh.position.set(s*.27,.58,0);hips.add(sh);G(new T.CylinderGeometry(.055,.05,.34,10),cl,0,-.17,0,sh);const el=new T.Group();el.position.y=-.34;sh.add(el);G(new T.CylinderGeometry(.05,.04,.32,10),cl,0,-.16,0,el);const hd=new T.Group();hd.position.y=-.34;el.add(hd);G(new T.SphereGeometry(.055,10,8),sk,0,0,0,hd);return{sh,el,hd}},al=arm(-1),ar=arm(1);
+  const leg=s=>{const hp=new T.Group();hp.position.set(s*.1,0,0);hips.add(hp);G(new T.CylinderGeometry(.08,.07,.5,10),M('#1d1744',.6),0,-.25,0,hp);const kn=new T.Group();kn.position.y=-.5;hp.add(kn);G(new T.CylinderGeometry(.07,.06,.5,10),M('#1d1744',.6),0,-.25,0,kn);G(new T.BoxGeometry(.12,.07,.24),M('#2a1a20',.4),0,-.52,.05,kn);return{hp,kn}},ll=leg(-1),lr=leg(1);
+  let gown=null;if(o.gown){gown=G(new T.CylinderGeometry(.2,.66,1.2,28,1,true),cl,0,-.4,0,hips);gown.material.side=T.DoubleSide;G(new T.TorusGeometry(.66,.025,8,40),go,0,-1,0,hips).rotation.x=Math.PI/2}
+  sc.add(g);return{g,hips,tor,head,cl,gown,sh:[al.sh,ar.sh],el:[al.el,ar.el],hd:[al.hd,ar.hd],hp:[ll.hp,lr.hp],kn:[ll.kn,lr.kn]}}
+ K=person({hair:'#2a1a12',cloth:cfg.kc});Q=person({hair:'#5a3422',cloth:cfg.qc,gown:1,long:1});
+ /* ring + box */
+ ringL=new T.Group();sc.add(ringL);const rg=new T.Mesh(new T.TorusGeometry(.04,.009,10,24),M('#f7e1a8',.15,1,'#7a5a20'));ringL.add(rg);const di=new T.Mesh(new T.OctahedronGeometry(.02),M('#ffffff',.05,.2,'#bfe6ff'));di.position.y=.045;ringL.add(di);const gs=new T.Sprite(new T.SpriteMaterial({map:gt,color:'#fff4d0',blending:T.AdditiveBlending,transparent:true}));gs.scale.set(.5,.5,1);gs.position.y=.04;ringL.add(gs);ring={rg,gs,box:G(new T.BoxGeometry(.1,.05,.1),M('#6b1a3e',.7),0,.02,.04,K.hd[1])};G(new T.BoxGeometry(.1,.015,.1),M('#6b1a3e',.7),0,.07,.02,K.hd[1]).rotation.x=-.6;
+ /* particles: fireworks pool + ambient petals */
+ fw=pts(MOB?1200:2400,1.5,(i,p,c)=>{p[i*3+1]=-999});fw.u={v:new Float32Array((MOB?1200:2400)*3),l:new Float32Array(MOB?1200:2400),k:0,col:new Float32Array((MOB?1200:2400)*3)};
+ amb=pts(MOB?120:260,.28,(i,p,c)=>{p[i*3]=(Math.random()-.5)*16;p[i*3+1]=Math.random()*8;p[i*3+2]=(Math.random()-.5)*16;const pk=Math.random()<.6;c[i*3]=pk?1:1;c[i*3+1]=pk?.55:.85;c[i*3+2]=pk?.75:.5});amb.material.size=.22;
+ addEventListener('resize',fitR);fitR()}
+function fitR(){if(!R)return;R.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.fov=cam.aspect<1?78:55;cam.updateProjectionMatrix()}
+function burst(x,y,z,n,pal){const u=fw.u,N=u.l.length,p=fw.geometry.attributes.position.array;for(let i=0;i<n;i++){const k=(u.k++)%N,a=Math.random()*6.28,b=Math.acos(Math.random()*2-1),s=3+Math.random()*7;p[k*3]=x;p[k*3+1]=y;p[k*3+2]=z;u.v[k*3]=Math.sin(b)*Math.cos(a)*s;u.v[k*3+1]=Math.cos(b)*s;u.v[k*3+2]=Math.sin(b)*Math.sin(a)*s;u.l[k]=1.4+Math.random()*.8;const c=pal[(Math.random()*pal.length)|0];u.col[k*3]=c[0];u.col[k*3+1]=c[1];u.col[k*3+2]=c[2]}}
+const PAL=[[1,.45,.7],[1,.85,.5],[.75,.6,1],[1,1,.9]];
+function stepFx(dt){const u=fw.u,g=fw.geometry,p=g.attributes.position.array,c=g.attributes.color.array;for(let i=0;i<u.l.length;i++){if(u.l[i]<=0)continue;u.l[i]-=dt;u.v[i*3+1]-=4*dt;p[i*3]+=u.v[i*3]*dt;p[i*3+1]+=u.v[i*3+1]*dt;p[i*3+2]+=u.v[i*3+2]*dt;u.v[i*3]*=.985;u.v[i*3+2]*=.985;const f=Math.max(0,Math.min(1,u.l[i]));c[i*3]=u.col[i*3]*f;c[i*3+1]=u.col[i*3+1]*f;c[i*3+2]=u.col[i*3+2]*f;if(u.l[i]<=0)p[i*3+1]=-999}g.attributes.position.needsUpdate=g.attributes.color.needsUpdate=true}
+/* poses */
+const A=(j,x,z=0,k=.1)=>{j.rotation.x+=(x-j.rotation.x)*k;j.rotation.z+=(z-j.rotation.z)*k};
+function walk(p,w,a){A(p.hp[0],Math.sin(w)*.55*a);A(p.hp[1],-Math.sin(w)*.55*a);A(p.kn[0],Math.max(0,-Math.sin(w))*.7*a);A(p.kn[1],Math.max(0,Math.sin(w))*.7*a);A(p.sh[0],-Math.sin(w)*.45*a,.06);A(p.sh[1],Math.sin(w)*.45*a,-.06);A(p.el[0],-.15);A(p.el[1],-.15)}
+function breathe(p,t){p.tor.scale.y=1+.012*Math.sin(t*2);p.head.rotation.z=.03*Math.sin(t*.9)}
+const V=()=>new THREE.Vector3();
+/* ---------- scene logic ---------- */
+function place(p,x,y,z,ry){p.g.position.set(x,y,z);p.g.rotation.y=ry}
+function upd(t,dt){
+ const T=THREE,i=cur;let cx,cy,cz,lx,ly,lz;amb.position.set(0,0,0);
+ K.g.visible=Q.g.visible=i>0;ring.rg.parent.visible=ringL.visible=i===2;
+ if(i===0){const e=E(t/10);cx=0;cy=lp(2.4,3.4,e);cz=lp(22,11,e);lx=0;ly=lp(3,4.5,e);lz=-30;const o=E((t-3)/4);gateL.rotation.y=-o*1.55;gateR.rotation.y=o*1.55;castleLight.intensity=o*3;castleLight.position.set(0,6,-14);warm.position.set(0,3,-4);amb.position.set(0,0,-6)}
+ else if(i===1){const e=E(t/5.5);place(K,lp(-7,-1.7,e),0,-12,Math.PI/2);place(Q,lp(7,1.7,e),0,-12,-Math.PI/2);const w=t*6.5,a=t<5.5?1:0;walk(K,w,a);walk(Q,w+1,a);const b=E((t-6)/1.2)*(1-E((t-8)/1.2));A(K.hips,b*.55);Q.g.position.y=-.1*b;A(Q.sh[0],-.1*b,.5*b);breathe(K,t);breathe(Q,t+1);
+  const an=1.2*t*.06;cx=Math.sin(.5+t*.05)*6.5;cz=-12+Math.cos(.5+t*.05)*6.5;cy=1.6;lx=0;ly=1.3;lz=-12;warm.position.set(0,3,-10);amb.position.set(0,0,-12);castleLight.intensity=3}
+ else if(i===2){const e=E(t/3.2),kn=E((t-3.4)/1.4);place(Q,.62,0,-12,-Math.PI/2);place(K,lp(-2.4,-.55,e),-.45*kn,-12,Math.PI/2);const w=t*6.5,a=t<3.2?1:0;walk(K,w,a);
+  A(K.hp[1],-1.45*kn+(1-kn)*K.hp[1].rotation.x*0);A(K.kn[1],1.45*kn);A(K.hp[0],0);A(K.kn[0],1.5*kn);A(K.sh[1],-1.15*kn,-.1*kn,.12);A(K.el[1],-.7*kn,0,.12);A(K.sh[0],.1,.1*kn);
+  const ok=acc?E((t-ta)/1.2):0;A(Q.sh[0],-1.0-0.4*(1-ok)*0-.2*ok,.1,.08);A(Q.el[0],-.9+.7*ok,0,.08);A(Q.sh[1],ok?-.2:-.9,-.1);A(Q.el[1],ok?-.1:-1.3);A(K.hips,.15*kn);A(Q.hips,.05*Math.sin(t*1.2)+(ok?-.05:0));breathe(K,t);breathe(Q,t+1);
+  const sp=E((t-1)/8);cx=lp(.3,1.1,sp);cy=lp(1.5,1.15,sp);cz=lp(-7.4,-9.2,sp);lx=0;ly=lp(1.05,.95,sp);lz=-12;warm.position.set(0,2.4,-10);amb.position.set(0,0,-12);castleLight.intensity=3;
+  const bw=V(),qw=V();K.hd[1].getWorldPosition(bw);Q.hd[0].getWorldPosition(qw);const m=acc?E((t-ta-.4)/1.4):0;ringL.position.set(lp(bw.x,qw.x,m),lp(bw.y+.12,qw.y-.02,m),lp(bw.z,qw.z,m));const gl=.5+.5*Math.sin(t*4);ring.gs.scale.setScalar(.35+.25*gl+(acc?.4*E(1-(t-ta)/3):0));
+  if(kn>.95&&!typed){typed=1;typeMsg(cfg.m)}}
+ else{place(K,199.6,0,0,Math.PI);place(Q,200.5,0,0,Math.PI);K.g.visible=Q.g.visible=true;A(K.sh[1],-.5,.1);A(K.el[1],-.7);A(Q.sh[0],-.5,-.1);A(Q.el[0],-.7);Q.head.rotation.z=-.12;breathe(K,t);breathe(Q,t+1);const e=E(t/14);cx=200;cy=lp(1.7,2.6,e);cz=lp(4.2,7,e);lx=200;ly=lp(7,10,e);lz=-45;warm.position.set(200,3,1);amb.position.set(200,0,0);castleLight.intensity=4;castleLight.position.set(200,10,-30);
+  fwT-=dt;if(fwT<=0){fwT=.7+Math.random()*.9;burst(200+(Math.random()-.5)*50,14+Math.random()*16,-40-Math.random()*20,MOB?70:130,[PAL[(Math.random()*4)|0],PAL[(Math.random()*4)|0]]);boom((Math.random()-.5)*1.6)}}
+ if(acc&&i===2&&!acc.b){acc.b=1}
+ cam.position.set(cx,cy,cz);cam.lookAt(lx,ly,lz);
+ const a=amb.geometry.attributes.position.array;for(let k=0;k<a.length;k+=3){a[k+1]-=dt*.5;a[k]+=Math.sin(t+k)*dt*.2;if(a[k+1]<0)a[k+1]=8}amb.geometry.attributes.position.needsUpdate=true;
+ stepFx(dt)}
+/* ---------- UI ---------- */
+function typeMsg(m){const L=$('rfL');L.textContent='';let n=0;const id=setInterval(()=>{if(cur!==2){clearInterval(id);return}L.textContent=m.slice(0,++n);if(n>=m.length){clearInterval(id);$('rfYes').classList.add('on')}},RM?1:38)}
+function go(n){if(n<0||n>=SC.length)return;cur=n;t0=performance.now();acc=0;typed=0;fwT=0;$('rfT').textContent=SC[n].t;$('rfL').textContent=SC[n].l;$('rfYes').classList.remove('on');$('rfN').classList.toggle('on',n===1);
+ [...$('rfDots').children].forEach((d,i)=>d.classList.toggle('on',i===n));$('rfBack').disabled=n===0;$('rfNext').textContent=n===SC.length-1?'Replay ♡':'Continue';
+ if(n===1){$('rfNK').innerHTML='The King<small>'+esc(cfg.k)+'</small>';$('rfNQ').innerHTML='The Queen<small>'+esc(cfg.q)+'</small>'}
+ if(n===2&&!R){$('rfL').textContent=cfg.m;$('rfYes').classList.add('on')}if(n===0)setTimeout(creak,2800);
+ try{history.replaceState(null,'','#scene'+(n+1))}catch(e){}}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function say(){if(acc||cur!==2)return;acc=1;ta=(performance.now()-t0)/1000;$('rfYes').classList.remove('on');$('rfL').textContent='She said yes. 💍✨ Forever begins now.';chime(784);setTimeout(()=>chime(988),350);setTimeout(()=>chime(1318),700);if(R){const q=V();Q.hd[0].getWorldPosition(q);burst(q.x,q.y+.4,q.z,200,[[1,.45,.7],[1,.85,.5]])}}
+function applyCfg(){if(!R)return;K.cl.color.set(cfg.kc);Q.cl.color.set(cfg.qc)}
+function frame(now){requestAnimationFrame(frame);if(!R||cur<0||document.hidden)return;const t=(now-t0)/1000,dt=Math.min(.05,(now-(frame.l||now))/1000);frame.l=now;upd(t,dt);R.render(sc,cam);
+ if(++frames<=150){acum+=dt;if(frames===150&&acum/150>.032&&tier){tier=0;R.setPixelRatio(1);R.shadowMap.enabled=false;sc.userData.moon.castShadow=false;fw.geometry.setDrawRange(0,600);amb.geometry.setDrawRange(0,80)}}}
+function init(){
+ $('rfDots').innerHTML=SC.map(()=>'<i></i>').join('');const gl=(()=>{try{const c=document.createElement('canvas');return !!(window.WebGLRenderingContext&&(c.getContext('webgl')||c.getContext('experimental-webgl')))}catch(e){return false}})();
+ if(gl&&window.THREE){try{build3D();applyCfg()}catch(e){console.error(e);R=null}}
+ if(!R){$('rfCv').hidden=true;$('rfFb').hidden=false}
+ $('rfLoad').classList.add('off');$('rfStart').classList.remove('off');
+ $('rfEnter').onclick=()=>{audioStart();$('rfStart').classList.add('off');const h=parseInt((location.hash.match(/scene(\d)/)||[])[1]);go(h>=1&&h<=4?h-1:0)};
+ $('rfNext').onclick=()=>{chime(660);go(cur===SC.length-1?0:cur+1)};$('rfBack').onclick=()=>go(cur-1);$('rfYes').onclick=say;
+ $('rfSnd').onclick=()=>{sndOn=!sndOn;$('rfSnd').textContent=sndOn?'♪':'✕';if(mg)mg.gain.value=sndOn?.5:0;if(AC&&AC.state==='suspended')AC.resume()};
+ $('rfLeave').onclick=()=>{if(history.length>1&&document.referrer)history.back();else location.href='princess_day_website_fairytale_v3.html#final'};
+ const P=$('rfPan'),f=()=>{$('cK').value=cfg.k;$('cQ').value=cfg.q;$('cM').value=cfg.m;$('cKc').value=cfg.kc;$('cQc').value=cfg.qc};
+ $('rfCfgB').onclick=()=>{f();P.classList.add('on')};$('cClose').onclick=()=>P.classList.remove('on');
+ $('cSave').onclick=()=>{cfg={k:$('cK').value||D0.k,q:$('cQ').value||D0.q,m:$('cM').value||D0.m,kc:$('cKc').value,qc:$('cQc').value};try{localStorage.setItem('royalFairytaleCfg',JSON.stringify(cfg))}catch(e){}applyCfg();P.classList.remove('on');if(cur>=0)go(cur)};
+ $('cReset').onclick=()=>{cfg={...D0};try{localStorage.removeItem('royalFairytaleCfg')}catch(e){}f();applyCfg()};
+ addEventListener('keydown',e=>{if(e.key==='Escape')P.classList.remove('on');if(/INPUT|TEXTAREA/.test(document.activeElement.tagName)||cur<0)return;if(e.key==='ArrowRight')$('rfNext').click();if(e.key==='ArrowLeft')$('rfBack').click()});
+ requestAnimationFrame(frame)}
+addEventListener('load',init);
+})();
+</script></body></html>
